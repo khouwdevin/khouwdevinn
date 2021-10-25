@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.icon{
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+}
+
+.descriptive{
+    height: auto;
+    color: white;
+}
+
+.descriptive a{
+    text-decoration: none;
+    color: white;
+}
+
+.contact{
+    margin-top: 20px;
+}
+
+#instagramicon {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+}
+
+#photo {
+    display: block;
+    margin-top: 20%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+}
+
+.leftside{
+    background: rgba(0, 0, 0, 0.8);
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.rightside{
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.navdown{
+    margin-top: 30%;
+}
