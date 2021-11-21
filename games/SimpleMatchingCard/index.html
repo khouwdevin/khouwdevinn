@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Simple Matching Cards</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="icon" href="../../Image/icon.png" type="image/icon type">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../../index.css" rel="stylesheet">
+  </head>
+  <body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<!-- NavBar -->
+<section>
+  <nav class="navbar navbar-expand-lg top_navbar">
+      <div class="navbar-collapsee w-100 order-1 order-md-0 dual-collapse2">
+          <ul class="nav nav-pills mr-auto">
+              <li class="nav-item">
+                  <h5 class="nav-link active" aria-current="page">Khouw Devin Nathanael</h5>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" style="color: white;" href="../../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white;" href="../../portofolio/">Portofolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white;" href="../../links/">Links</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Games Lists
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark" style="background-color: #0099ff; border-color: white;" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" style="color: white;" href="https://dodge-quiz.github.io/Dormicate/">Dormicate</a></li>
+                      <li><a class="dropdown-item" style="color: white;" href="../RunKyle!Run/">Run Kyle! Run!</a></li>
+                      <li><a class="dropdown-item" style="color: white;" href="">Simple Matching Card</a></li>
+                      <li><a class="dropdown-item" style="color: white;" href="../MentalHero/">Mental Hero</a></li>
+                  </ul>
+                </li>
+          </ul>
+      </div>
+      <div class="navbar ml-auto w-100 justify-content-end">
+          <ul class="navbar-nav ml-auto">
+              <a class="navbar-brand fs-6" href="https://www.instagram.com/khouwdevin/" style="color: white;">
+                  <img src="../../Image/instagramicon.png" alt="" width="25" height="25" class="d-inline-block">instagram
+              </a>
+          </ul>
+      </div>
+  </nav>
+</section>
+<!-- NavBar -->
+
+    <div id="unity-container" class="unity-desktop" style="margin-top: 2rem;">
+      <canvas id="unity-canvas" width=960 height=600></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-mobile-warning">
+        WebGL builds are not supported on mobile devices.
+      </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Simple Matching Cards</div>
+      </div>
+    </div>
+    <script>
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Simple-Matching-Card.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Simple-Matching-Card.data.unityweb",
+        frameworkUrl: buildUrl + "/Simple-Matching-Card.framework.js.unityweb",
+        codeUrl: buildUrl + "/Simple-Matching-Card.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Simple Matching Cards",
+        productVersion: "1.0",
+      };
+
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var mobileWarning = document.querySelector("#unity-mobile-warning");
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+          mobileWarning.style.display = "none";
+        }, 5000);
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
